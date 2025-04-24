@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>(づ ◕‿◕ )づ</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #yes {
+      transition: transform 0.3s ease;
+    }
+
+    #no {
+      transition: margin-top 0.3s ease;
+    }
+
+    .gap-3 > * + * {
+      margin-top: 1rem;
+    }
+
+    #image {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .button-container {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5 text-center">
+    <img src="image1.jpg" id="image" width="200px" height="200px">
+    <h2 class="text-dark mt-3" id="text1">可以成为我的恋人吗?</h2>
+
+    <div class="button-container d-flex flex-column align-items-center gap-3 mt-3">
+      <button class="btn btn-primary" id="yes">YES</button>
+      <button class="btn btn-primary" id="no">NO</button>
+    </div>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      let scaleFactor = 1;
+      let clickCount = 0;
+
+      $("#yes").click(function(){
+        window.location.href = "yes.html";
+      });
+
+      $("#no").click(function(){
+        scaleFactor += 2;
+        clickCount++;
+
+        $("#yes").css("transform", "scale(" + scaleFactor + ")");
+        $("#no").css("margin-top", (scaleFactor * 5) + "px");
+
+        if (clickCount === 1) {
+          $("#text1").text("Do you want to rethink about it?");
+          $("#image").attr("src","image2.jpg");
+        } else if (clickCount === 2) {
+          $("#text1").text("I don't allow this.");
+          $("#image").attr("src","image3.jpg");
+        } else if (clickCount === 3) {
+          $("#text1").text("I'm going to be sad.");
+        } else if (clickCount === 4) {
+          $("#text1").text("This is serious business!");
+        } else if (clickCount === 5) {
+          $("#text1").text("I'm not joking now...");
+        } else if (clickCount === 6) {
+          $("#text1").text("Are you trying to break my heart?");
+        } else if (clickCount === 7) {
+          $("#text1").text("We're running out of chances...");
+        } else if (clickCount === 8) {
+          $("#text1").text("You're making me very emotional.");
+        } else if (clickCount === 9) {
+          $("#text1").text("I really thought you were the one!");
+        } else {
+          $("#text1").text("You've made your decision. Can you live with it?");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
