@@ -6,11 +6,10 @@
   <title>(づ ◕‿◕ )づ</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
-  
     body {
-     overflow-x: hidden;
+      overflow-x: hidden;
     }  
-    
+
     #yes {
       transition: transform 0.3s ease;
       background-color: #F3CFC6;
@@ -29,22 +28,20 @@
     }
 
     .button-container {
-     margin-top: 80px;
-     display: flex;
-     justify-content: center;
-     align-items: flex-end;
-     gap: 1rem;
-}
+      margin-top: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 1rem;
+    }
 
-#yes, #no {
-  background-color: #F3CFC6;
-  flex-shrink: 0;
-  min-width: 80px;
-  min-height: 40px;
-  transition: transform 0.3s ease;
-}
-
-
+    #yes, #no {
+      background-color: #F3CFC6;
+      flex-shrink: 0;
+      min-width: 80px;
+      min-height: 40px;
+      transition: transform 0.3s ease;
+    }
   </style>
 </head>
 
@@ -56,29 +53,59 @@
       <button class="btn btn-dark" id="yes">YES</button>
       <button class="btn btn-dark" id="no">NO</button>
     </div>
+    <!-- Music Toggle Button -->
+    <button class="btn btn-secondary" id="toggle-music">Play Music</button>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   
-  <audio id="bg-music" autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-  <script>
-  const music = document.getElementById("bg-music");
-  const toggle = document.getElementById("toggle-music");
+  <!-- Audio Element -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
 
-  toggle.addEventListener("click", function() {
-    if (music.paused) {
-      music.play();
-      toggle.textContent = "Pause Music";
-    } else {
-      music.pause();
-      toggle.textContent = "Play Music";
+  <script>
+    const music = document.getElementById("bg-music");
+    const toggle = document.getElementById("toggle-music");
+
+    let musicStarted = false;
+    let toggleClickCount = 0;
+    const maxClicks = 10;
+
+    // Start music on first interaction
+    function startMusic() {
+      if (!musicStarted) {
+        music.play().then(() => {
+          musicStarted = true;
+          toggle.textContent = "Pause Music";
+        }).catch(err => {
+          console.log("Autoplay blocked:", err);
+        });
+      }
     }
-  });
-</script>
 
-  <script>
+    // Start music when any part of the page is clicked
+    document.addEventListener("click", startMusic, { once: true });
+
+    // Toggle music manually
+    toggle.addEventListener("click", function () {
+      if (toggleClickCount >= maxClicks) {
+        toggle.disabled = true;
+        toggle.textContent = "Maxed out 🎵";
+        return;
+      }
+
+      if (music.paused) {
+        music.play();
+        toggle.textContent = "Pause Music";
+      } else {
+        music.pause();
+        toggle.textContent = "Play Music";
+      }
+
+      toggleClickCount++;
+    });
+
     $(document).ready(function(){
       let scaleFactor = 1;
       let clickCount = 0;
@@ -88,50 +115,50 @@
       });
 
       $("#no").click(function() {
-      scaleFactor += 1;
-      clickCount++;
+        scaleFactor += 1;
+        clickCount++;
 
-  $("#yes").css("transform", "scale(" + scaleFactor + ")");
+        $("#yes").css("transform", "scale(" + scaleFactor + ")");
 
-  if (clickCount === 1) {
-    $("#no").text("Do you want to rethink about it?");
-    $("#image").attr("src", "image2.jpg");
-    $("#no").css("transform", "translateX(" + (scaleFactor * 20) + "px)");
-  } else if (clickCount === 2) {
-    $("#no").text("I don't allow this.");
-    $("#image").attr("src", "image3.jpg");
-    $("#no").css("transform", "translateX(" + (scaleFactor * 30) + "px)");
-  } else if (clickCount === 3) {
-    $("#no").text("I'm going to be sad.");
-    $("#image").attr("src", "image4.jpg");
-    $("#no").css("transform", "translateX(" + (scaleFactor * 40) + "px)");
-  } else if (clickCount === 4) {
-    $("#no").text("This is serious business!");
-    $("#image").attr("src", "image5.jpg");
-    $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
-  } else if (clickCount === 5) {
-    $("#no").text("I'm not joking now...");
-    $("#image").attr("src", "image10.jpg");
-     $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
-  } else if (clickCount === 6) {
-    $("#no").text("Are you trying to break my heart?");
-    $("#image").attr("src", "image6.jpg");
-     $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
-  } else if (clickCount === 7) {
-    $("#no").text("We're running out of chances...");
-    $("#image").attr("src", "image7.jpg");
-    $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
-  } else if (clickCount === 8) {
-    $("#no").text("You're making me very emotional.");
-    $("#image").attr("src", "image8.jpg");
-     $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
-  } else if (clickCount === 9) {
-    $("#no").text("I really thought you were the one!");
-    $("#image").attr("src", "image9.jpg");
-    $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
-  }
-});
-});
+        if (clickCount === 1) {
+          $("#no").text("Do you want to rethink about it?");
+          $("#image").attr("src", "image2.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 20) + "px)");
+        } else if (clickCount === 2) {
+          $("#no").text("I don't allow this.");
+          $("#image").attr("src", "image3.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 30) + "px)");
+        } else if (clickCount === 3) {
+          $("#no").text("I'm going to be sad.");
+          $("#image").attr("src", "image4.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 40) + "px)");
+        } else if (clickCount === 4) {
+          $("#no").text("This is serious business!");
+          $("#image").attr("src", "image5.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+        } else if (clickCount === 5) {
+          $("#no").text("I'm not joking now...");
+          $("#image").attr("src", "image10.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+        } else if (clickCount === 6) {
+          $("#no").text("Are you trying to break my heart?");
+          $("#image").attr("src", "image6.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+        } else if (clickCount === 7) {
+          $("#no").text("We're running out of chances...");
+          $("#image").attr("src", "image7.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+        } else if (clickCount === 8) {
+          $("#no").text("You're making me very emotional.");
+          $("#image").attr("src", "image8.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+        } else if (clickCount === 9) {
+          $("#no").text("I really thought you were the one!");
+          $("#image").attr("src", "image9.jpg");
+          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+        }
+      });
+    });
   </script>
 
 </body>
