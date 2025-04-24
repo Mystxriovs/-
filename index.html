@@ -6,37 +6,55 @@
   <title>(づ ◕‿◕ )づ</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <style>
+  
+    body {
+     overflow-x: hidden;
+    }  
+    
     #yes {
       transition: transform 0.3s ease;
+      background-color: #F3CFC6;
     }
 
     #no {
-      transition: margin-top 0.3s ease;
-    }
-
-    .gap-3 > * + * {
-      margin-top: 1rem;
+      transition: margin-left 0.3s ease;
+      background-color: #F3CFC6;
     }
 
     #image {
       display: block;
       margin: 0 auto;
+      width: 200px;
+      height: 200px;
     }
 
     .button-container {
-      margin-top: 40px;
-    }
+     margin-top: 80px;
+     display: flex;
+     justify-content: center;
+     align-items: flex-end;
+     gap: 1rem;
+}
+
+#yes, #no {
+  background-color: #F3CFC6;
+  flex-shrink: 0;
+  min-width: 80px;
+  min-height: 40px;
+  transition: transform 0.3s ease;
+}
+
+
   </style>
 </head>
 
 <body>
   <div class="container mt-5 text-center">
-    <img src="image1.jpg" id="image" width="200px" height="200px">
-    <h2 class="text-dark mt-3" id="text1">可以成为我的恋人吗?</h2>
-
-    <div class="button-container d-flex flex-column align-items-center gap-3 mt-3">
-      <button class="btn btn-primary" id="yes">YES</button>
-      <button class="btn btn-primary" id="no">NO</button>
+    <img src="image1.jpg" id="image">
+    <h2 class="text-dark mt-3" id="text1">Can you be my one and only? </h2>
+    <div class="button-container">
+      <button class="btn btn-dark" id="yes">YES</button>
+      <button class="btn btn-dark" id="no">NO</button>
     </div>
   </div>
 
@@ -50,38 +68,56 @@
         window.location.href = "yes.html";
       });
 
-      $("#no").click(function(){
-        scaleFactor += 2;
-        clickCount++;
+      $("#no").click(function() {
+      scaleFactor += 1;
+      clickCount++;
 
-        $("#yes").css("transform", "scale(" + scaleFactor + ")");
-        $("#no").css("margin-top", (scaleFactor * 5) + "px");
+  $("#yes").css("transform", "scale(" + scaleFactor + ")");
 
-        if (clickCount === 1) {
-          $("#text1").text("Do you want to rethink about it?");
-          $("#image").attr("src","image2.jpg");
-        } else if (clickCount === 2) {
-          $("#text1").text("I don't allow this.");
-          $("#image").attr("src","image3.jpg");
-        } else if (clickCount === 3) {
-          $("#text1").text("I'm going to be sad.");
-        } else if (clickCount === 4) {
-          $("#text1").text("This is serious business!");
-        } else if (clickCount === 5) {
-          $("#text1").text("I'm not joking now...");
-        } else if (clickCount === 6) {
-          $("#text1").text("Are you trying to break my heart?");
-        } else if (clickCount === 7) {
-          $("#text1").text("We're running out of chances...");
-        } else if (clickCount === 8) {
-          $("#text1").text("You're making me very emotional.");
-        } else if (clickCount === 9) {
-          $("#text1").text("I really thought you were the one!");
-        } else {
-          $("#text1").text("You've made your decision. Can you live with it?");
-        }
-      });
+  if (clickCount === 1) {
+    $("#no").text("Do you want to rethink about it?");
+    $("#image").attr("src", "image2.jpg");
+    $("#no").css("transform", "translateX(" + (scaleFactor * 20) + "px)");
+  } else if (clickCount === 2) {
+    $("#no").text("I don't allow this.");
+    $("#image").attr("src", "image3.jpg");
+    $("#no").css("transform", "translateX(" + (scaleFactor * 30) + "px)");
+  } else if (clickCount === 3) {
+    $("#no").text("I'm going to be sad.");
+    $("#image").attr("src", "image4.jpg");
+    $("#no").css("transform", "translateX(" + (scaleFactor * 40) + "px)");
+  } else if (clickCount === 4) {
+    $("#no").text("This is serious business!");
+    $("#image").attr("src", "image5.jpg");
+    $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+  } else if (clickCount === 5) {
+    $("#no").text("I'm not joking now...");
+    $("#image").attr("src", "image10.jpg");
+     $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+  } else if (clickCount === 6) {
+    $("#no").text("Are you trying to break my heart?");
+    $("#image").attr("src", "image6.jpg");
+     $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+  } else if (clickCount === 7) {
+    $("#no").text("We're running out of chances...");
+    $("#image").attr("src", "image7.jpg");
+    $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+  } else if (clickCount === 8) {
+    $("#no").text("You're making me very emotional.");
+    $("#image").attr("src", "image8.jpg");
+     $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+  } else if (clickCount === 9) {
+    $("#no").text("I really thought you were the one!");
+    $("#image").attr("src", "image9.jpg");
+    $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
+  }
+});
+
     });
   </script>
+  <audio id="bg-music" autoplay loop>
+  <source src="7%.mp3" type="audio/mpeg">
+</audio>
+
 </body>
 </html>
