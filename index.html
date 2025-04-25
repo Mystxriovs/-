@@ -18,7 +18,7 @@
       align-items: center;
       flex-direction: column;
       transition: opacity 0.8s ease;
-    }
+    }  
 
     .container {
       display: none;
@@ -32,6 +32,7 @@
       width: 200px;
       height: 200px;
       margin-bottom: 20px;
+      object-fit: cover;
     }
 
     #text1 {
@@ -65,7 +66,6 @@
       position: relative;
     }
 
-    /* Intro screen styles */
     #intro-screen {
       position: fixed;
       top: 0; left: 0;
@@ -122,17 +122,11 @@
     document.getElementById("start-btn").addEventListener("click", function () {
       const music = document.getElementById("bg-music");
 
-      // Ensure music plays after user interaction
       music.currentTime = 0;
       music.volume = 1;
       music.muted = false;
-      music.play().then(() => {
-        console.log("Music is playing!");
-      }).catch(err => {
-        console.warn("Music couldn't play:", err);
-      });
+      music.play().catch(err => console.warn("Music couldn't play:", err));
 
-      // Fade out the intro screen and show main content
       const intro = document.getElementById("intro-screen");
       intro.style.opacity = 0;
       setTimeout(() => {
@@ -141,52 +135,32 @@
       }, 800);
     });
 
-    $(document).ready(function() {
-      let scaleFactor = 1;
-      let clickCount = 0;
-      const maxYesClicks = 9;
+    $(document).ready(function () {
+      let clickCount = 1;
 
-      $("#yes").click(function() {
-        if (clickCount < maxYesClicks) {
-          window.location.href = "yes.html";
-        } else {
-          $("#yes").prop("disabled", true);
-          $("#yes").text("That's enough YES 😅");
-        }
-      });
+      const images = [
+        "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg",
+        "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg", "image10.jpg"
+      ];
 
-      $("#no").click(function() {
-        // Increment click count and adjust scaling
-        if (clickCount < 9) {
-          scaleFactor += 0.25;
+      const messages = [
+        "Do you want to rethink about it?",
+        "I don't allow this.",
+        "I'm going to be sad.",
+        "This is serious business!",
+        "I'm not joking now...",
+        "Are you trying to break my heart?",
+        "We're running out of chances...",
+        "You're making me very emotional.",
+        "I really thought you were the one!",
+        "This is the final chance!"
+      ];
+
+      $("#no").click(function () {
+        if (clickCount < images.length) {
+          $("#image").attr("src", images[clickCount]);
+          $("#text1").text(messages[clickCount]);
           clickCount++;
-          $("#yes").css("transform", "scale(" + scaleFactor + ")");
-        }
-
-        // Define images and messages for each click
-        const images = [
-          "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", 
-          "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg", "image10.jpg"
-        ];
-
-        const messages = [
-          "Do you want to rethink about it?",
-          "I don't allow this.",
-          "I'm going to be sad.",
-          "This is serious business!",
-          "I'm not joking now...",
-          "Are you trying to break my heart?",
-          "We're running out of chances...",
-          "You're making me very emotional.",
-          "I really thought you were the one!",
-          "This is the final chance!"
-        ];
-
-        // Update image and message on each click
-        if (clickCount <= images.length && clickCount <= messages.length) {
-          $("#image").attr("src", images[clickCount - 1]);
-          $("#no").text(messages[clickCount - 1]);
-          $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
         }
       });
     });
