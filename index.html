@@ -11,11 +11,11 @@
     }  
 
     .container {
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
-      padding-bottom: 150px; /* prevent overlap with growing buttons */
+      padding-bottom: 150px;
     }
 
     #image {
@@ -50,10 +50,44 @@
       transform-origin: center center;
       position: relative;
     }
+
+    /* Intro screen styles */
+    #intro-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #fff;
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 0.8s ease;
+    }
+
+    #start-btn {
+      background-color: #F3CFC6;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    #start-btn:hover {
+      background-color: #e8b5a8;
+    }
   </style>
 </head>
 
 <body>
+  <!-- Intro screen -->
+  <div id="intro-screen">
+    <h2>💌 Ready for a surprise?</h2>
+    <button id="start-btn">Start</button>
+  </div>
+
+  <!-- Main content -->
   <div class="container mt-5 text-center">
     <img src="image1.jpg" id="image">
     <h2 class="text-dark mt-3" id="text1">Can you be my one and only?</h2>
@@ -63,21 +97,33 @@
     </div>
   </div>
 
-  <!-- Audio element for background music -->
-  <audio id="bg-music">
+  <!-- Audio element -->
+  <audio id="bg-music" loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
-    // Try to play music immediately when page loads
-    window.addEventListener('load', () => {
+    document.getElementById("start-btn").addEventListener("click", function () {
       const music = document.getElementById("bg-music");
 
-      // Attempt to play the music
-      music.play().catch((error) => {
-        console.warn("Autoplay was blocked by the browser:", error);
+      // Ensure music plays after user interaction
+      music.currentTime = 0;
+      music.volume = 1;
+      music.muted = false;
+      music.play().then(() => {
+        console.log("Music is playing!");
+      }).catch(err => {
+        console.warn("Music couldn't play:", err);
       });
+
+      // Fade out the intro screen and show main content
+      const intro = document.getElementById("intro-screen");
+      intro.style.opacity = 0;
+      setTimeout(() => {
+        intro.style.display = "none";
+        document.querySelector(".container").style.display = "flex";
+      }, 800);
     });
 
     $(document).ready(function(){
@@ -97,7 +143,6 @@
       });
 
       $("#no").click(function() {
-        // Only increase scaleFactor if less than or equal to 9 clicks
         if (clickCount < 9) {
           scaleFactor += 0.25;
           clickCount++;
