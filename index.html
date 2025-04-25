@@ -18,7 +18,7 @@
       align-items: center;
       flex-direction: column;
       transition: opacity 0.8s ease;
-    }  
+    }
 
     .container {
       display: none;
@@ -28,7 +28,7 @@
       padding-bottom: 150px;
     }
 
-    #image {
+    #main-image {
       width: 200px;
       height: 200px;
       margin-bottom: 20px;
@@ -97,14 +97,14 @@
 <body>
   <!-- Intro screen -->
   <div id="intro-screen">
-    <img src="cat.gif" id="image">
+    <img src="cat.gif" id="main-image">
     <h2>💌 Ready for a surprise?</h2>
     <button id="start-btn">Start</button>
   </div>
 
   <!-- Main content -->
   <div class="container mt-5 text-center">
-    <img src="image1.jpg" id="image">
+    <img src="image1.jpg" id="main-image">
     <h2 class="text-dark mt-3" id="text1">Can you be my one and only?</h2>
     <div class="button-container">
       <button class="btn btn-dark" id="yes">YES</button>
@@ -121,7 +121,6 @@
   <script>
     document.getElementById("start-btn").addEventListener("click", function () {
       const music = document.getElementById("bg-music");
-
       music.currentTime = 0;
       music.volume = 1;
       music.muted = false;
@@ -139,7 +138,7 @@
       let clickCount = 1;
 
       const images = [
-        "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg",
+        "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg",
         "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg", "image10.jpg"
       ];
 
@@ -152,15 +151,16 @@
         "Are you trying to break my heart?",
         "We're running out of chances...",
         "You're making me very emotional.",
-        "I really thought you were the one!",
         "This is the final chance!"
       ];
 
       $("#no").click(function () {
-        if (clickCount < 10) {
-          $("#image").attr("src", images[clickCount]);
-          $("#text1").text(messages[clickCount]);
+        if (clickCount <= images.length) {
+          $("#main-image").attr("src", images[clickCount - 1]);
+          $("#text1").text(messages[clickCount - 1]);
           clickCount++;
+        } else {
+          $("#no").text("No more NOs 😤");
         }
       });
     });
