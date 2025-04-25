@@ -18,7 +18,7 @@
       align-items: center;
       flex-direction: column;
       transition: opacity 0.8s ease;
-    }  
+    }
 
     .container {
       display: none;
@@ -141,15 +141,13 @@
       }, 800);
     });
 
-    $(document).ready(function(){
+    $(document).ready(function() {
       let scaleFactor = 1;
       let clickCount = 0;
-      let yesClickCount = 0;
       const maxYesClicks = 9;
 
-      $("#yes").click(function(){
-        yesClickCount++;
-        if (yesClickCount <= maxYesClicks) {
+      $("#yes").click(function() {
+        if (clickCount < maxYesClicks) {
           window.location.href = "yes.html";
         } else {
           $("#yes").prop("disabled", true);
@@ -158,15 +156,17 @@
       });
 
       $("#no").click(function() {
+        // Increment click count and adjust scaling
         if (clickCount < 9) {
           scaleFactor += 0.25;
           clickCount++;
           $("#yes").css("transform", "scale(" + scaleFactor + ")");
         }
 
+        // Define images and messages for each click
         const images = [
-          "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", "image10.jpg",
-          "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg"
+          "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", "image6.jpg",
+          "image7.jpg", "image8.jpg", "image9.jpg", "image10.jpg"
         ];
 
         const messages = [
@@ -181,9 +181,10 @@
           "I really thought you were the one!"
         ];
 
-        if (clickCount <= messages.length) {
-          $("#no").text(messages[clickCount - 1]);
+        // Update image and message on each click
+        if (clickCount <= images.length && clickCount <= messages.length) {
           $("#image").attr("src", images[clickCount - 1]);
+          $("#no").text(messages[clickCount - 1]);
           $("#no").css("transform", "translateX(" + (scaleFactor * 50) + "px)");
         }
       });
