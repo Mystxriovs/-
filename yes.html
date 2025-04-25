@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💖</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fbe4e1, #ffe8f0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+
+    .message-box {
+      background-color: #fff0f5;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+      animation: popIn 1s ease-out;
+    }
+
+    .message-box h1 {
+      font-size: 2.5rem;
+      color: #e94e77;
+      margin-bottom: 20px;
+    }
+
+    .message-box p {
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    .heart {
+      font-size: 3rem;
+      color: #ff6b81;
+      animation: beat 1.2s infinite;
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0.6);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #f3cfc6;
+      border-radius: 50%;
+      animation: float 4s linear infinite;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="message-box">
+    <div class="heart">💖</div>
+    <h1>Yaaay!!!</h1>
+    <p>You just made someone the happiest person alive 🥹</p>
+    <p>Let's begin our chapter ✨</p>
+  </div>
+
+  <!-- Background music -->
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Confetti effect
+    for (let i = 0; i < 30; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'confetti';
+      dot.style.left = Math.random() * 100 + 'vw';
+      dot.style.animationDelay = (Math.random() * 4) + 's';
+      dot.style.backgroundColor = ['#f3cfc6', '#f8b195', '#f67280', '#c06c84'][Math.floor(Math.random() * 4)];
+      document.body.appendChild(dot);
+    }
+
+    // Music auto-play with user interaction
+    window.addEventListener('click', () => {
+      const music = document.getElementById('bg-music');
+      music.muted = false;
+      music.play().catch(err => console.warn("Music autoplay blocked:", err));
+    }, { once: true });
+  </script>
+</body>
+</html>
