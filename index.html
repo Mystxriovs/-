@@ -157,7 +157,7 @@
       ];
 
       $("#no").click(function () {
-        if (clickCount < images.length) {
+        if (clickCount < 10) {
           $("#image").attr("src", images[clickCount]);
           $("#text1").text(messages[clickCount]);
           clickCount++;
