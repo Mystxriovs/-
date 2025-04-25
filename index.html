@@ -95,10 +95,12 @@
       });
 
       $("#no").click(function() {
-        scaleFactor += 0.25;
-        clickCount++;
-
-        $("#yes").css("transform", "scale(" + scaleFactor + ")");
+        // Only increase scaleFactor if less than or equal to 9 clicks
+        if (clickCount < 9) {
+          scaleFactor += 0.25;
+          clickCount++;
+          $("#yes").css("transform", "scale(" + scaleFactor + ")");
+        }
 
         const images = [
           "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", "image10.jpg",
