@@ -64,7 +64,7 @@
   </div>
 
   <!-- Audio element for background music -->
-  <audio id="bg-music" autoplay loop>
+  <audio id="bg-music">
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
@@ -73,6 +73,8 @@
     // Try to play music immediately when page loads
     window.addEventListener('load', () => {
       const music = document.getElementById("bg-music");
+
+      // Attempt to play the music
       music.play().catch((error) => {
         console.warn("Autoplay was blocked by the browser:", error);
       });
