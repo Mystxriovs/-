@@ -154,6 +154,9 @@
         "This is the final chance!"
       ];
 
+      $("#yes").click(function () {
+         window.location.href = "yes.html";
+      });
       $("#no").click(function () {
         if (clickCount <= images.length) {
           $("#main-image").attr("src", images[clickCount - 1]);
