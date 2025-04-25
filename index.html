@@ -10,31 +10,45 @@
       overflow-x: hidden;
     }  
 
-    #yes, #no {
-      background-color: #F3CFC6;
-      transition: transform 0.3s ease;
-      min-width: 80px;
-      min-height: 40px;
-      flex-shrink: 0;
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 150px; /* prevent overlap with growing buttons */
     }
 
     #image {
-      display: block;
-      margin: 0 auto;
       width: 200px;
       height: 200px;
+      margin-bottom: 20px;
+    }
+
+    #text1 {
+      margin-bottom: 40px;
     }
 
     .button-container {
-      margin-top: 80px;
+      margin-top: 20px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
       gap: 1rem;
+      flex-wrap: wrap;
     }
 
-    #toggle-music {
-      margin-top: 20px;
+    #yes, #no {
+      background-color: #F3CFC6;
+      min-width: 80px;
+      min-height: 40px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    #yes {
+      transform-origin: center center;
+      position: relative;
     }
   </style>
 </head>
@@ -42,58 +56,42 @@
 <body>
   <div class="container mt-5 text-center">
     <img src="image1.jpg" id="image">
-    <h2 class="text-dark mt-3" id="text1">Can you be my one and only? </h2>
+    <h2 class="text-dark mt-3" id="text1">Can you be my one and only?</h2>
     <div class="button-container">
       <button class="btn btn-dark" id="yes">YES</button>
       <button class="btn btn-dark" id="no">NO</button>
     </div>
-    <button class="btn btn-secondary" id="toggle-music" style="display:none;">Play Music</button>
   </div>
 
+  <!-- Audio element for background music -->
   <audio id="bg-music" autoplay loop>
     <source src="music.mp3" type="audio/mpeg">
   </audio>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script>
-    const music = document.getElementById("bg-music");
-    const toggleBtn = document.getElementById("toggle-music");
-
-    // Try to autoplay music
+    // Try to play music immediately when page loads
     window.addEventListener('load', () => {
-      const playMusic = () => {
-        music.play().then(() => {
-          toggleBtn.textContent = "Pause Music";
-          toggleBtn.style.display = "inline-block";
-        }).catch(() => {
-          // Autoplay failed; show toggle to let user start it
-          toggleBtn.textContent = "Play Music";
-          toggleBtn.style.display = "inline-block";
-        });
-      };
-
-      // Delay a bit to improve chances of autoplay working
-      setTimeout(playMusic, 500);
+      const music = document.getElementById("bg-music");
+      music.play().catch((error) => {
+        console.warn("Autoplay was blocked by the browser:", error);
+      });
     });
 
-    // Toggle button behavior
-    toggleBtn.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-        toggleBtn.textContent = "Pause Music";
-      } else {
-        music.pause();
-        toggleBtn.textContent = "Play Music";
-      }
-    });
-
-    // Button logic
     $(document).ready(function(){
       let scaleFactor = 1;
       let clickCount = 0;
+      let yesClickCount = 0;
+      const maxYesClicks = 9;
 
       $("#yes").click(function(){
-        window.location.href = "yes.html";
+        yesClickCount++;
+        if (yesClickCount <= maxYesClicks) {
+          window.location.href = "yes.html";
+        } else {
+          $("#yes").prop("disabled", true);
+          $("#yes").text("That's enough YES 😅");
+        }
       });
 
       $("#no").click(function() {
@@ -102,7 +100,11 @@
 
         $("#yes").css("transform", "scale(" + scaleFactor + ")");
 
-        const images = ["image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", "image10.jpg", "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg"];
+        const images = [
+          "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg", "image10.jpg",
+          "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg"
+        ];
+
         const messages = [
           "Do you want to rethink about it?",
           "I don't allow this.",
